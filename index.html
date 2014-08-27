@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Globalization of the US, 1775-1861</title>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="assets/MarkerCluster.css" />
+    <link rel="stylesheet" href="assets/MarkerCluster.Default.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="//cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="assets/jquery.ui.touch-punch.min.js"></script>
+  </head>
+  <body>
+
+    <!-- Map window -->
+    <div id="map"></div>
+
+    <!-- Timeline window -->
+    <div id="timeline-group">
+      <p id="current-year"></p>
+      <div id="slider"></div>
+      <div id="control-group">
+        <ul>
+          <li>
+          <button id="skip-backward" class="button">
+            <img src="images/skip-backward.png" class="button-icon"> 
+          </button>
+          </li>
+          <li>
+          <button id="animate-control" class="button">
+            <img src="images/play.png" id="icon-target" class="button-icon"> 
+          </button>
+          </li>
+          <li>
+          <button id="skip-forward" class="button">
+            <img src="images/skip-forward.png" class="button-icon">
+          </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <!--<script src="assets/markercluster.min.js"></script>-->
+    <script src="assets/cluster.js"></script>
+    <script src="data/style.js"></script>
+    <script src="data/data.js"></script>
+    <script src="data/timeline.js"></script>
+
+  </body>
+</html>

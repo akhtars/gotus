@@ -1,0 +1,82 @@
+/* Global Styles */
+html,body {
+  height: 90%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: black;
+}
+
+#map {
+  margin-top: 3%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid black;
+  height: 90%;
+  width: 95%;
+}
+
+.icon-hint {
+  height: 15px;
+  width: 20px;
+}
+
+#timeline-group {
+  margin-top: 3%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 20%;
+}
+
+#current-year {
+  text-align: center;
+  font-weight: bold;
+  color: white;
+}
+
+#slider {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  width: 80%;
+}
+
+#control-group {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#control-group ul {
+  clear:left;
+  float:left;
+  list-style:none;
+  margin:0;
+  padding:0;
+  position:relative;
+  left:50%;
+  text-align:center;
+}
+
+#control-group ul li {
+  display:block;
+  float:left;
+  list-style:none;
+  margin:0;
+  padding:0;
+  position:relative;
+  right:50%;
+  margin-bottom: 5%;
+}
+
+#control-group ul li button {
+  display:block;
+  margin:0 0 0 1px;
+  padding:3px 10px;
+  text-decoration:none;
+  line-height:1.3em;
+}
+
+.button-icon {
+  max-height: 30px;
+  max-width: 30px;
+}
