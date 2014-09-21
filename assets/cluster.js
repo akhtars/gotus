@@ -15,7 +15,8 @@
             chunkInterval: 200,
             chunkDelay: 50,
             chunkProgress: null,
-            polygonOptions: {}
+            polygonOptions: {},
+            clusterClass: "" // New option for selecting categorical color coding
         },
         initialize: function(e) {
             L.Util.setOptions(this, e);
@@ -438,9 +439,14 @@
             } else {
                 n += "large"
             }
+            if (this.clusterClass.toString() != "") {
+                var x = " marker-cluster-" + this.clusterClass.toString()
+            } else {
+                var x = ""
+            }
             return new L.DivIcon({
                 html: "<div><span>" + t + "</span></div>",
-                className: "marker-cluster" + n,
+                className: "marker-cluster" + n + x,
                 iconSize: new L.Point(40, 40)
             })
         },
