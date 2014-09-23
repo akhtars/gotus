@@ -1,3 +1,5 @@
+/* Plugin Default Colors */
+
 .marker-cluster-small {
 	background-color: rgba(181, 226, 140, 0.6);
 	}
@@ -41,20 +43,254 @@
 	background-color: rgb(241, 128, 23);
 }
 
+/* Military: Foreign Military Actions */
+
+.marker-cluster-small.marker-cluster-foreign-military-actions {
+	background-color: rgba(102, 116, 127, 0.6);
+	}
+.marker-cluster-small.marker-cluster-foreign-military-actions div {
+	background-color: rgba(102, 116, 127, 0.6);
+	}
+
+.marker-cluster-medium.marker-cluster-foreign-military-actions {
+	background-color: rgba(51, 69, 84, 0.6);
+	}
+.marker-cluster-medium.marker-cluster-foreign-military-actions div {
+	background-color: rgba(51, 69, 84, 0.6);
+	}
+
+.marker-cluster-large.marker-cluster-foreign-military-actions {
+	background-color: rgba(0, 23, 41, 0.6);
+	}
+.marker-cluster-large.marker-cluster-foreign-military-actions div {
+	background-color: rgba(0, 23, 41, 0.6);
+	}
+
+/* Military: Overseas Marine Landings */
+
+.marker-cluster-small.marker-cluster-overseas-marine-landings {
+	background-color: rgba(131, 176, 180, 0.6);
+	}
+.marker-cluster-small.marker-cluster-overseas-marine-landings div {
+	background-color: rgba(131, 176, 180, 0.6);
+	}
+
+.marker-cluster-medium.marker-cluster-overseas-marine-landings {
+	background-color: rgba(89, 150, 155, 0.6);
+	}
+.marker-cluster-medium.marker-cluster-overseas-marine-landings div {
+	background-color: rgba(89, 150, 155, 0.6);
+	}
+
+.marker-cluster-large.marker-cluster-overseas-marine-landings {
+	background-color: rgba(48, 124, 130, 0.6);
+	}
+.marker-cluster-large.marker-cluster-overseas-marine-landings div {
+	background-color: rgba(48, 124, 130, 0.6);
+	}
+
+/* Military: Overseas Navy Personnel */
+
+.marker-cluster-small.marker-cluster-overseas-navy-personnel {
+	background-color: rgba(127, 160, 187, 0.6);
+	}
+.marker-cluster-small.marker-cluster-overseas-navy-personnel div {
+	background-color: rgba(127, 160, 187, 0.6);
+	}
+
+.marker-cluster-medium.marker-cluster-overseas-navy-personnel {
+	background-color: rgba(85, 128, 165, 0.6);
+	}
+.marker-cluster-medium.marker-cluster-overseas-navy-personnel div {
+	background-color: rgba(85, 128, 165, 0.6);
+	}
+
+.marker-cluster-large.marker-cluster-overseas-navy-personnel {
+	background-color: rgba(85, 128, 165, 0.6);
+	}
+.marker-cluster-large.marker-cluster-overseas-navy-personnel div {
+	background-color: rgba(85, 128, 165, 0.6);
+	}
+
+/* Immigration: Major Foreign Origins */
+
+.marker-cluster-small.marker-cluster-major-foreign-origins {
+	background-color: rgba(225, 136, 116, 0.6);
+	}
+.marker-cluster-small.marker-cluster-major-foreign-origins div {
+	background-color: rgba(225, 136, 116, 0.6);
+	}
+
+.marker-cluster-medium.marker-cluster-major-foreign-origins {
+	background-color: rgba(215, 96, 70, 0.6);
+	}
+.marker-cluster-medium.marker-cluster-major-foreign-origins div {
+	background-color: rgba(215, 96, 70, 0.6);
+	}
+
+.marker-cluster-large.marker-cluster-major-foreign-origins {
+	background-color: rgba(205, 56, 24, 0.6);
+	}
+.marker-cluster-large.marker-cluster-major-foreign-origins div {
+	background-color: rgba(205, 56, 24, 0.6);
+	}
+
+/* Immigration: Minor Foreign Origins */
+
+.marker-cluster-small.marker-cluster-minor-foreign-origins {
+	background-color: rgba(255, 167, 102, 0.6);
+	}
+.marker-cluster-small.marker-cluster-minor-foreign-origins div {
+	background-color: rgba(255, 167, 102, 0.6);
+	}
+
+.marker-cluster-medium.marker-cluster-minor-foreign-origins {
+	background-color: rgba(255, 138, 51, 0.6);
+	}
+.marker-cluster-medium.marker-cluster-minor-foreign-origins div {
+	background-color: rgba(255, 138, 51, 0.6);
+	}
+
+.marker-cluster-large.marker-cluster-minor-foreign-origins {
+	background-color: rgba(255, 109, 0, 0.6);
+	}
+.marker-cluster-large.marker-cluster-minor-foreign-origins div {
+	background-color: rgba(255, 109, 0, 0.6);
+	}
+
+/* Commerce: Foreign Exports */
+
+.marker-cluster-small.marker-cluster-foreign-exports {
+	background-color: rgba(158, 162, 124, 0.6);
+	}
+.marker-cluster-small.marker-cluster-foreign-exports div {
+	background-color: rgba(158, 162, 124, 0.6);
+	}
+
+.marker-cluster-medium.marker-cluster-foreign-exports {
+	background-color: rgba(126, 131, 80, 0.6);
+	}
+.marker-cluster-medium.marker-cluster-foreign-exports div {
+	background-color: rgba(126, 131, 80, 0.6);
+	}
+
+.marker-cluster-large.marker-cluster-foreign-exports {
+	background-color: rgba(94, 100, 36, 0.6);
+	}
+.marker-cluster-large.marker-cluster-foreign-exports div {
+	background-color: rgba(94, 100, 36, 0.6);
+	}
+
+/* Commerce: Foreign Imports */
+
+.marker-cluster-small.marker-cluster-foreign-imports {
+	background-color: rgba(188, 205, 130, 0.6);
+	}
+.marker-cluster-small.marker-cluster-foreign-imports div {
+	background-color: rgba(188, 205, 130, 0.6);
+	}
+
+.marker-cluster-medium.marker-cluster-foreign-imports {
+	background-color: rgba(165, 189, 88, 0.6);
+	}
+.marker-cluster-medium.marker-cluster-foreign-imports div {
+	background-color: rgba(165, 189, 88, 0.6);
+	}
+
+.marker-cluster-large.marker-cluster-foreign-imports {
+	background-color: rgba(143, 172, 46, 0.6);
+	}
+.marker-cluster-large.marker-cluster-foreign-imports div {
+	background-color: rgba(143, 172, 46, 0.6);
+	}
+
+/* Diplomacy: Diplomatic Missions */
+
+.marker-cluster-small.marker-cluster-diplomatic-missions {
+	background-color: rgba(143, 114, 103, 0.6);
+	}
+.marker-cluster-small.marker-cluster-diplomatic-missions div {
+	background-color: rgba(143, 114, 103, 0.6);
+	}
+
+.marker-cluster-medium.marker-cluster-diplomatic-missions {
+	background-color: rgba(106, 67, 52, 0.6);
+	}
+.marker-cluster-medium.marker-cluster-diplomatic-missions div {
+	background-color: rgba(106, 67, 52, 0.6);
+	}
+
+.marker-cluster-large.marker-cluster-diplomatic-missions {
+	background-color: rgba(69, 20, 1, 0.6);
+	}
+.marker-cluster-large.marker-cluster-diplomatic-missions div {
+	background-color: rgba(69, 20, 1, 0.6);
+	}
+
+/* Diplomacy: Foreign Treaties */
+
+.marker-cluster-small.marker-cluster-foreign-treaties {
+	background-color: rgba(179, 133, 103, 0.6);
+	}
+.marker-cluster-small.marker-cluster-foreign-treaties div {
+	background-color: rgba(179, 133, 103, 0.6);
+	}
+
+.marker-cluster-medium.marker-cluster-foreign-treaties {
+	background-color: rgba(153, 93, 53, 0.6);
+	}
+.marker-cluster-medium.marker-cluster-foreign-treaties div {
+	background-color: rgba(153, 93, 53, 0.6);
+	}
+
+.marker-cluster-large.marker-cluster-foreign-treaties {
+	background-color: rgba(128, 52, 2, 0.6);
+	}
+.marker-cluster-large.marker-cluster-foreign-treaties div {
+	background-color: rgba(128, 52, 2, 0.6);
+	}
+
+/* Missionary: Mission Stations */
+
+.marker-cluster-small.marker-cluster-mission-stations {
+	background-color: rgba(188, 102, 102, 0.6);
+	}
+.marker-cluster-small.marker-cluster-mission-stations div {
+	background-color: rgba(188, 102, 102, 0.6);
+	}
+
+.marker-cluster-medium.marker-cluster-mission-stations {
+	background-color: rgba(165, 51, 51, 0.6);
+	}
+.marker-cluster-medium.marker-cluster-mission-stations div {
+	background-color: rgba(165, 51, 51, 0.6);
+	}
+
+.marker-cluster-large.marker-cluster-mission-stations {
+	background-color: rgba(143, 0, 0, 0.6);
+	}
+.marker-cluster-large.marker-cluster-mission-stations div {
+	background-color: rgba(143, 0, 0, 0.6);
+	}
+
+/* General and Text */
+
 .marker-cluster {
 	background-clip: padding-box;
 	border-radius: 20px;
 	}
+	
 .marker-cluster div {
 	width: 30px;
 	height: 30px;
 	margin-left: 5px;
 	margin-top: 5px;
-
 	text-align: center;
 	border-radius: 15px;
 	font: 12px "Open Sans", sans-serif;
+	color: #FFFFFF;
 	}
+	
 .marker-cluster span {
 	line-height: 30px;
 	}
