@@ -1,5 +1,5 @@
 # App's location/URL
-app_path = "http://www.indiana.edu/~kdglobal/worldmap-dev/"
+app_path = "http://www.indiana.edu/~kdglobal/worldmap-test/"
 
 # Link to Google Doc (Make sure the correct gdoc_id is active so that the correct spreadsheet is pulled from)
 #gdoc_id = "1QoUlncYbfQi50y9TO20LvlPaox8JjHkBNaSujl-D_EE" #Main
