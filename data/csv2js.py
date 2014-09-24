@@ -105,9 +105,6 @@ removals = range(len(map_list))
 js_output = open("data.js", "w")
 js_output.write("// Leaflet data, compiled on " + tf + "\n")
 
-# Create marker cluster var so that individual objects can be appended to it as they come
-js_output.write("\nvar cluster = new L.MarkerClusterGroup();\n")
-
 # Initialize empty hashes to store array of records by key
 # This is to generate the list of everything that should turn on/off by layer
 # such as categories (cat_dict), records with only a start date (start_dict),
@@ -169,8 +166,7 @@ for index, marker in enumerate(marker_list):
     src = "<br/><Source:</b> "
 
   pop_text = "\"" + title + year_range + desc + hist_loc + pres_loc + src + "</p>\""
-  js_output.write("marker{0}.bindPopup({1}); ".format(index, pop_text))
-  js_output.write("cluster.addLayer(marker{0});\n".format(index))
+  js_output.write("marker{0}.bindPopup({1});\n".format(index, pop_text))
 
   if marker["eyear"] == "":
     if not marker["syear"] in start_dict:
@@ -280,19 +276,31 @@ for range in range_dict:
 
 js_output.write("\n")
 
-# Create (sub)categorical layers
+# Create subcategorical marker clusters
 overlayer = []
 
 for category in cat_dict:
+
+  for subcategory in cat_dict[category]:
+    cluster_name = "{0}Markers".format(subcategory.replace(" ", ""))
+    class_name = "{0}".format(subcategory.replace(" ", "-").lower())
+    cluster = "' -- {0}': {1},".format(subcategory, cluster_name) 
+    js_output.write("var {0} = new L.MarkerClusterGroup({{ clusterClass: \"{1}".format(cluster_name, class_name)) 
+    js_output.write("\" });\n")
+    
+    sublayer = "'{0}': {1},".format(subcategory, cluster_name)
+    overlayer.append(sublayer)
+
+js_output.write("\n")
+
+# Create (sub)categorical layers
+for category in cat_dict:
   layer_name = "{0}Layer".format(category.replace(" ", ""))
   layer = "'{0}': {1},".format(category, layer_name) 
-  overlayer.append(layer)
   cat_markers = []
 
   for subcategory in cat_dict[category]:
     sublayer_name = "{0}Layer".format(subcategory.replace(" ", ""))
-    sublayer = "' -- {0}': {1},".format(subcategory, sublayer_name) 
-    overlayer.append(sublayer)
 
     js_output.write("var {0} = L.layerGroup([".format(sublayer_name)) 
     for marker in cat_dict[category][subcategory]:
@@ -306,6 +314,17 @@ for category in cat_dict:
     js_output.write(marker)
   js_output.write("]);\n")
 
+js_output.write("\n")
+
+# Add subcategorical layers to marker clusters
+for category in cat_dict:
+
+  for subcategory in cat_dict[category]:
+    cluster_name = "{0}Markers".format(subcategory.replace(" ", ""))
+    sublayer_name = "{0}Layer".format(subcategory.replace(" ", ""))
+    js_output.write("{0}.addLayer({1});\n".format(cluster_name, sublayer_name))
+
+js_output.write("\n")
 
 # Set styling options for category/subcategory icons and shapes, and search the images folder
 # for filenames that match category/subcategory names
@@ -364,7 +383,6 @@ js_output.write("var bounds = L.latLngBounds(southWest, northEast);\n")
 js_output.write("\n")
 js_output.write("var map = L.map('map', {{ center: {0}, zoom: {1}, maxBounds: bounds }});\n".format(settings.init_center, settings.init_zoom))
 js_output.write("L.control.layers(baseLayers, overlays).addTo(map);\n\n")
-js_output.write("\nmap.addLayer(cluster);\n\n")
 
 # create 'setBasemap' function which switches basemaps on trigger years
 js_output.write("function setBasemap(time) {\n")
@@ -379,42 +397,42 @@ for index, map in enumerate(map_list):
 js_output.write("};\n\n")
 
 # create 'setStarts' function which triggers objects on their start year
-js_output.write("function setStarts(time) {\n")
-for year in start_dict:
-  js_output.write("\tif (time >= {0}) {{\n".format(year))
-  js_output.write("\t\tmap.addLayer(start{0}Layer);\n".format(year))
-  js_output.write("\t} else {\n")
-  js_output.write("\t\tmap.removeLayer(start{0}Layer);\n".format(year))
-  js_output.write("\t}\n")
-js_output.write("};\n\n")
+# js_output.write("function setStarts(time) {\n")
+# for year in start_dict:
+  # js_output.write("\tif (time >= {0}) {{\n".format(year))
+  # js_output.write("\t\tmap.addLayer(start{0}Layer);\n".format(year))
+  # js_output.write("\t} else {\n")
+  # js_output.write("\t\tmap.removeLayer(start{0}Layer);\n".format(year))
+  # js_output.write("\t}\n")
+# js_output.write("};\n\n")
 
 # create 'setIsos' function which triggers objects that last only one year and remove the following year
-js_output.write("function setIsos(time) {\n")
-for year in iso_dict:
-  js_output.write("\tif (time === {0}) {{\n".format(year))
-  js_output.write("\t\tmap.addLayer(iso{0}Layer);\n".format(year))
-  js_output.write("\t} else {\n")
-  js_output.write("\t\tmap.removeLayer(iso{0}Layer);\n".format(year))
-  js_output.write("\t}\n")
-js_output.write("};\n\n")
+# js_output.write("function setIsos(time) {\n")
+# for year in iso_dict:
+  # js_output.write("\tif (time === {0}) {{\n".format(year))
+  # js_output.write("\t\tmap.addLayer(iso{0}Layer);\n".format(year))
+  # js_output.write("\t} else {\n")
+  # js_output.write("\t\tmap.removeLayer(iso{0}Layer);\n".format(year))
+  # js_output.write("\t}\n")
+# js_output.write("};\n\n")
 
 # create 'setRanges' function which triggers objects on start year and removes on end year
-js_output.write("function setRanges(time) {\n")
-for year in range_dict:
-  s = year.split("_")
-  js_output.write("\tif (time >= {0} && time <= {1}) {{\n".format(s[0], s[1]))
-  js_output.write("\t\tmap.addLayer(range{0}Layer);\n".format(year))
-  js_output.write("\t} else {\n")
-  js_output.write("\t\tmap.removeLayer(range{0}Layer);\n".format(year))
-  js_output.write("\t}\n")
-js_output.write("};\n\n")
+# js_output.write("function setRanges(time) {\n")
+# for year in range_dict:
+  # s = year.split("_")
+  # js_output.write("\tif (time >= {0} && time <= {1}) {{\n".format(s[0], s[1]))
+  # js_output.write("\t\tmap.addLayer(range{0}Layer);\n".format(year))
+  # js_output.write("\t} else {\n")
+  # js_output.write("\t\tmap.removeLayer(range{0}Layer);\n".format(year))
+  # js_output.write("\t}\n")
+# js_output.write("};\n\n")
 
 # create 'setData' function which triggers all other functions at once
 js_output.write("function setData(time) {\n")
 js_output.write("\tsetBasemap(time);\n")
-js_output.write("\tsetStarts(time);\n")
-js_output.write("\tsetIsos(time);\n")
-js_output.write("\tsetRanges(time);\n")
+# js_output.write("\tsetStarts(time);\n")
+# js_output.write("\tsetIsos(time);\n")
+# js_output.write("\tsetRanges(time);\n")
 js_output.write("};\n")
 js_output.close()
 
