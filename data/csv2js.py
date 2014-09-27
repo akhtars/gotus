@@ -125,16 +125,27 @@ for index, map in enumerate(map_list):
   base = "'{0}': map{1},".format(map['title'], index) 
   base_layer.append(base)
 
-# Generate all js marker vars and write to 'data.js'
-# Also generate pop-up to display relevant metadata and bind to marker var
-# Next, append marker var to cluster layer
-# Finally, store record data in relevant hash depending on category and year metadata
-js_output.write("\n")
+# Generate marker GeoJSON
 for index, marker in enumerate(marker_list):
-  marker_name = "marker{0}".format(index)
-  marker_var = "var {0} = L.marker([{1}, {2}], {{icon: {3}Icon}}); "
-  js_output.write(marker_var.format(marker_name, marker["lat"], marker["lon"], marker["subcat"].replace(" ", "")))
+  if not marker["cat"] in cat_dict:
+    cat_dict[marker["cat"]] = {}
+  if not marker["subcat"] in cat_dict[marker["cat"]]:
+    cat_dict[marker["cat"]][marker["subcat"]] = []
+  
+OverseasMarineLandings = "\nvar OverseasMarineLandings={type:\"FeatureCollection\",features:["
+OverseasNavyPersonnel = "\nvar OverseasNavyPersonnel={type:\"FeatureCollection\",features:["
+ForeignMilitaryActions = "\nvar ForeignMilitaryActions={type:\"FeatureCollection\",features:["
+ForeignImports = "\nvar ForeignImports={type:\"FeatureCollection\",features:["
+ForeignExports = "\nvar ForeignExports={type:\"FeatureCollection\",features:["
+MinorForeignOrigins = "\nvar MinorForeignOrigins={type:\"FeatureCollection\",features:["
+MajorForeignOrigins = "\nvar MajorForeignOrigins={type:\"FeatureCollection\",features:["
+MissionStations = "\nvar MissionStations={type:\"FeatureCollection\",features:["
+DiplomaticMissions = "\nvar DiplomaticMissions={type:\"FeatureCollection\",features:["
+ForeignTreaties = "\nvar ForeignTreaties={type:\"FeatureCollection\",features:["
 
+for index, marker in enumerate(marker_list):
+  subcat = marker["subcat"].replace(" ", "")
+  
   title = "<p><b><u>{0}</u></b>".format(marker["title"])
   if marker["drange"] != "":
     year_range = "<br/><b>Years:</b> {0}".format(marker["drange"])
@@ -166,28 +177,62 @@ for index, marker in enumerate(marker_list):
     src = "<br/><Source:</b> "
 
   pop_text = "\"" + title + year_range + desc + hist_loc + pres_loc + src + "</p>\""
-  js_output.write("marker{0}.bindPopup({1});\n".format(index, pop_text))
-
+  
   if marker["eyear"] == "":
-    if not marker["syear"] in start_dict:
-      start_dict[marker["syear"]] = []
-    start_dict[marker["syear"]].append("marker{0}".format(index))
+    date_type = "start"
+    date = "[{0}]".format(marker["syear"])
   else:
     if marker["eyear"] == marker["syear"]:
-      if not marker["syear"] in iso_dict:
-        iso_dict[marker["syear"]] = []
-      iso_dict[marker["syear"]].append("marker{0}".format(index))
+      date_type = "iso"
+      date = "[{0}]".format(marker["syear"])
     else:
-      key = "{0}_{1}".format(marker["syear"], marker["eyear"])
-      if not key in range_dict:
-        range_dict[key] = []
-      range_dict[key].append("marker{0}".format(index))
+      date_type = "range"
+      date = "[{0},{1}]".format(marker["syear"], marker["eyear"])
+  
+  marker_json = "{{type:\"Feature\",id:\"{0}\",date_type:\"{1}\",date:{2},geometry:{{type:\"Point\",coordinates:[{3},{4}]}},pop_text:{5}}},".format(index, date_type, date, marker["lon"], marker["lat"], pop_text)
+  
+  if subcat == "OverseasMarineLandings":
+    OverseasMarineLandings += marker_json
+  elif subcat == "OverseasNavyPersonnel":
+    OverseasNavyPersonnel += marker_json
+  elif subcat == "ForeignMilitaryActions":
+    ForeignMilitaryActions += marker_json
+  elif subcat == "ForeignImports":
+    ForeignImports += marker_json
+  elif subcat == "ForeignExports":
+    ForeignExports += marker_json
+  elif subcat == "MinorForeignOrigins":
+    MinorForeignOrigins += marker_json
+  elif subcat == "MajorForeignOrigins":
+    MajorForeignOrigins += marker_json
+  elif subcat == "MissionStations":
+    MissionStations += marker_json
+  elif subcat == "DiplomaticMissions":
+    DiplomaticMissions += marker_json
+  elif subcat == "ForeignTreaties":
+    ForeignTreaties += marker_json
 
-  if not marker["cat"] in cat_dict:
-    cat_dict[marker["cat"]] = {}
-  if not marker["subcat"] in cat_dict[marker["cat"]]:
-    cat_dict[marker["cat"]][marker["subcat"]] = []
-  cat_dict[marker["cat"]][marker["subcat"]].append(marker_name)
+OverseasMarineLandings += "]}"
+OverseasNavyPersonnel += "]}"
+ForeignMilitaryActions += "]}"
+ForeignImports += "]}"
+ForeignExports += "]}"
+MinorForeignOrigins += "]}"
+MajorForeignOrigins += "]}"
+MissionStations += "]}"
+DiplomaticMissions += "]}"
+ForeignTreaties += "]}"
+
+js_output.write(OverseasMarineLandings)
+js_output.write(OverseasNavyPersonnel)
+js_output.write(ForeignMilitaryActions)
+js_output.write(ForeignImports)
+js_output.write(ForeignExports)
+js_output.write(MinorForeignOrigins)
+js_output.write(MajorForeignOrigins)
+js_output.write(MissionStations)
+js_output.write(DiplomaticMissions)
+js_output.write(ForeignTreaties)
 
 # Generate all js shape vars and write to 'data.js'
 # Also generate pop-up to display relevant metadata and bind to shape var
@@ -251,30 +296,38 @@ for index, shape in enumerate(shape_list):
         range_dict[key] = []
       range_dict[key].append("shape{0}".format(index))
 
-
-# Create layers of objects with related years
 js_output.write("\n")
-for year in start_dict:
-  js_output.write("var start{0}Layer = L.layerGroup([".format(year))
-  for object in start_dict[year]:
-    js_output.write("{0},".format(object))
-  js_output.write("]);\n")
 
-js_output.write("\n")
-for year in iso_dict:
-  js_output.write("var iso{0}Layer = L.layerGroup([".format(year))
-  for object in iso_dict[year]:
-    js_output.write("{0},".format(object))
-  js_output.write("]);\n")
+js_output.write("var currentYear = null;\n")
 
+# Custom GeoJSON filter functions and popup bindings
+js_output.write("function filter(feature, layer) {\n")
+js_output.write("\tswitch(feature.date_type) {\n")
+js_output.write("\t\tcase \"start\":\n")
+js_output.write("\t\t\tif (currentYear >= feature.date[0]) {\n")
+js_output.write("\t\t\t\treturn true;\n")
+js_output.write("\t\t\t} else {\n")
+js_output.write("\t\t\t\treturn false;\n")
+js_output.write("\t\t\t};\n")
+js_output.write("\t\tcase \"iso\":\n")
+js_output.write("\t\t\tif (currentYear == feature.date[0]) {\n")
+js_output.write("\t\t\t\treturn true;\n")
+js_output.write("\t\t\t} else {\n")
+js_output.write("\t\t\t\treturn false;\n")
+js_output.write("\t\t\t};\n")
+js_output.write("\t\tcase \"range\":\n")
+js_output.write("\t\t\tif (currentYear >= feature.date[0] && currentYear <= feature.date[1]) {\n")
+js_output.write("\t\t\t\treturn true;\n")
+js_output.write("\t\t\t} else {\n")
+js_output.write("\t\t\t\treturn false;\n")
+js_output.write("\t\t\t};\n")
+js_output.write("\t}\n")
+js_output.write("};\n")
 js_output.write("\n")
-for range in range_dict:
-  js_output.write("var range{0}Layer = L.layerGroup([".format(range))
-  for object in range_dict[range]:
-    js_output.write("{0},".format(object))
-  js_output.write("]);\n")
-
-js_output.write("\n")
+js_output.write("function onEachFeature(feature, layer) {\n")
+js_output.write("\tvar popup = feature.pop_text;\n")
+js_output.write("\tlayer.bindPopup(popup);\n")
+js_output.write("};\n\n")
 
 # Create subcategorical marker clusters
 overlayer = []
@@ -295,24 +348,11 @@ js_output.write("\n")
 
 # Create (sub)categorical layers
 for category in cat_dict:
-  layer_name = "{0}Layer".format(category.replace(" ", ""))
-  layer = "'{0}': {1},".format(category, layer_name) 
-  cat_markers = []
 
   for subcategory in cat_dict[category]:
     sublayer_name = "{0}Layer".format(subcategory.replace(" ", ""))
-
-    js_output.write("var {0} = L.layerGroup([".format(sublayer_name)) 
-    for marker in cat_dict[category][subcategory]:
-      marker_fmt = "{0},".format(marker)
-      cat_markers.append(marker_fmt)
-      js_output.write(marker_fmt)
-    js_output.write("]);\n") 
-
-  js_output.write("var {0} = L.layerGroup([".format(layer_name)) 
-  for marker in cat_markers:
-    js_output.write(marker)
-  js_output.write("]);\n")
+    js_output.write("var {0} = L.geoJson({1},{{filter: filter, onEachFeature: onEachFeature, pointToLayer: function (feature, latlng) {{return L.marker(latlng, {{icon:{2}Icon}})}}}}".format(sublayer_name, subcategory.replace(" ", ""), subcategory.replace(" ", ""))) 
+    js_output.write(");\n")
 
 js_output.write("\n")
 
@@ -396,43 +436,25 @@ for index, map in enumerate(map_list):
   js_output.write("\t}\n")
 js_output.write("};\n\n")
 
-# create 'setStarts' function which triggers objects on their start year
-# js_output.write("function setStarts(time) {\n")
-# for year in start_dict:
-  # js_output.write("\tif (time >= {0}) {{\n".format(year))
-  # js_output.write("\t\tmap.addLayer(start{0}Layer);\n".format(year))
-  # js_output.write("\t} else {\n")
-  # js_output.write("\t\tmap.removeLayer(start{0}Layer);\n".format(year))
-  # js_output.write("\t}\n")
-# js_output.write("};\n\n")
-
-# create 'setIsos' function which triggers objects that last only one year and remove the following year
-# js_output.write("function setIsos(time) {\n")
-# for year in iso_dict:
-  # js_output.write("\tif (time === {0}) {{\n".format(year))
-  # js_output.write("\t\tmap.addLayer(iso{0}Layer);\n".format(year))
-  # js_output.write("\t} else {\n")
-  # js_output.write("\t\tmap.removeLayer(iso{0}Layer);\n".format(year))
-  # js_output.write("\t}\n")
-# js_output.write("};\n\n")
-
-# create 'setRanges' function which triggers objects on start year and removes on end year
-# js_output.write("function setRanges(time) {\n")
-# for year in range_dict:
-  # s = year.split("_")
-  # js_output.write("\tif (time >= {0} && time <= {1}) {{\n".format(s[0], s[1]))
-  # js_output.write("\t\tmap.addLayer(range{0}Layer);\n".format(year))
-  # js_output.write("\t} else {\n")
-  # js_output.write("\t\tmap.removeLayer(range{0}Layer);\n".format(year))
-  # js_output.write("\t}\n")
-# js_output.write("};\n\n")
+# create 'setOverlays' function which refreshes data layers on timeline change
+js_output.write("function setOverlays(time) {\n")
+for category in cat_dict:
+  for subcategory in cat_dict[category]:
+    subcat = subcategory.replace(" ", "")
+    js_output.write("\t{0}Markers.removeLayer({0}Layer);\n".format(subcat))
+  for subcategory in cat_dict[category]:
+    subcat = subcategory.replace(" ", "")
+    js_output.write("\t{0}Layer = L.geoJson({0},{{filter: filter, onEachFeature: onEachFeature, pointToLayer: function (feature, latlng) {{return L.marker(latlng, {{icon: {0}Icon}})}}}});\n".format(subcat))
+  for subcategory in cat_dict[category]:
+    subcat = subcategory.replace(" ", "")
+    js_output.write("\t{0}Markers.addLayer({0}Layer);\n".format(subcat))
+js_output.write("};\n\n")
 
 # create 'setData' function which triggers all other functions at once
 js_output.write("function setData(time) {\n")
 js_output.write("\tsetBasemap(time);\n")
-# js_output.write("\tsetStarts(time);\n")
-# js_output.write("\tsetIsos(time);\n")
-# js_output.write("\tsetRanges(time);\n")
+js_output.write("\tsetOverlays(time);\n")
+js_output.write("\tcurrentYear = time;\n")
 js_output.write("};\n")
 js_output.close()
 
