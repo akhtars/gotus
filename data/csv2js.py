@@ -298,7 +298,7 @@ for index, shape in enumerate(shape_list):
 
 js_output.write("\n")
 
-js_output.write("var currentYear = null;\n")
+js_output.write("var currentYear = null;\n\n")
 
 # Custom GeoJSON filter functions and popup bindings
 js_output.write("function filter(feature, layer) {\n")
@@ -341,7 +341,7 @@ for category in cat_dict:
     js_output.write("var {0} = new L.MarkerClusterGroup({{ clusterClass: \"{1}".format(cluster_name, class_name)) 
     js_output.write("\" });\n")
     
-    sublayer = "'{0}': {1},".format(subcategory, cluster_name)
+    sublayer = "\"<img src='images/{0}.png' class='overlay-icon' height=13 width=10><span>&nbsp;{1}</span>\": {2},".format(subcategory.replace(" ", ""), subcategory, cluster_name)
     overlayer.append(sublayer)
 
 js_output.write("\n")

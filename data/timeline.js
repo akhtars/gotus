@@ -11,6 +11,10 @@ $(document).ready(function() {
       $('#current-year').html('Year: ' + ui.value);
       setData(ui.value);
     },
+    change: function(event, ui) {
+      $('#current-year').html('Year: ' + ui.value);
+      setData(ui.value);
+    },
   });
 
   function getYear() {
@@ -35,7 +39,7 @@ $(document).ready(function() {
 
   // Initialize page with default year
   $('#current-year').html('Year: ' + year);
-  setData(year);
+  setYear(year);
 
   // Skip forward button
   $('#skip-forward').on('click', this, function () {

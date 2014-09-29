@@ -21,6 +21,10 @@ html,body {
   width: 20px;
 }
 
+.overlay-icon {
+  margin: 0px 2px 0px 0px;
+}
+
 #timeline-group {
   margin-top: 3%;
   margin-left: auto;
