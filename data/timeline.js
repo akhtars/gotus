@@ -35,7 +35,7 @@ $(document).ready(function() {
   };
 
   var year = getYear();
-  var playing = false;
+  playing = false;
 
   // Initialize page with default year
   $('#current-year').html('Year: ' + year);
@@ -65,12 +65,13 @@ $(document).ready(function() {
           $("#icon-target").attr("src","images/play.png");
           playing = false;
         }
-      }, 500);
+      }, 1000);
     } else if (playing === true) {
       $("#icon-target").attr("src","images/play.png");
       clearInterval(animate);
       playing = false;
     }
   });
+
 
 });

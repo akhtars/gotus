@@ -21,7 +21,7 @@ init_center = [20, -35]
 init_zoom = 2
 
 # maximum zoom
-max_zoom = 6
+max_zoom = 5
 
 #minimum zoom
 min_zoom = 2

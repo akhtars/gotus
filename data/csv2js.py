@@ -329,6 +329,13 @@ js_output.write("\tvar popup = feature.pop_text;\n")
 js_output.write("\tlayer.bindPopup(popup);\n")
 js_output.write("};\n\n")
 
+# Pause timeline on marker or marker cluster click
+js_output.write("function pauseTimeline(a) {\n")
+js_output.write("\tclearInterval(animate);\n")
+js_output.write("\tplaying = false;\n")
+js_output.write("\t$(\"#icon-target\").attr(\"src\",\"images/play.png\");\n")
+js_output.write("};\n\n")
+
 # Create subcategorical marker clusters
 overlayer = []
 
@@ -339,7 +346,7 @@ for category in cat_dict:
     class_name = "{0}".format(subcategory.replace(" ", "-").lower())
     cluster = "' -- {0}': {1},".format(subcategory, cluster_name) 
     js_output.write("var {0} = new L.MarkerClusterGroup({{ clusterClass: \"{1}".format(cluster_name, class_name)) 
-    js_output.write("\" });\n")
+    js_output.write("\" }).on('click', pauseTimeline).on('clusterclick', pauseTimeline);\n")
     
     sublayer = "\"<img src='images/{0}.png' class='overlay-icon' height=13 width=10><span>&nbsp;{1}</span>\": {2},".format(subcategory.replace(" ", ""), subcategory, cluster_name)
     overlayer.append(sublayer)
@@ -422,7 +429,7 @@ js_output.write("var bounds = L.latLngBounds(southWest, northEast);\n")
 # Initialize map and append cluster layer group
 js_output.write("\n")
 js_output.write("var map = L.map('map', {{ center: {0}, zoom: {1}, maxBounds: bounds }});\n".format(settings.init_center, settings.init_zoom))
-js_output.write("L.control.layers(baseLayers, overlays).addTo(map);\n\n")
+js_output.write("L.control.layers(null, overlays).addTo(map);\n\n")
 
 # create 'setBasemap' function which switches basemaps on trigger years
 js_output.write("function setBasemap(time) {\n")
