@@ -7,6 +7,7 @@
 # Script for pulling historical metadata from Google spreadsheets and parsing into Leaflet JS
 # Created for the 'Globalization of the US, 1775-1861' project w/ Konstantin Dierks
 
+# Adjustments by Shaun Akhtar <shaun.akhtar@gmail.com>, September/October 2014
 
 import sys
 sys.dont_write_bytecode = True
@@ -331,25 +332,33 @@ js_output.write("};\n\n")
 
 # Pause timeline on marker or marker cluster click
 js_output.write("function pauseTimeline(a) {\n")
-js_output.write("\tclearInterval(animate);\n")
+js_output.write("\tclearInterval(window.animate);\n")
 js_output.write("\tplaying = false;\n")
 js_output.write("\t$(\"#icon-target\").attr(\"src\",\"images/play.png\");\n")
 js_output.write("};\n\n")
 
-# Create subcategorical marker clusters
-overlayer = []
+# Create subcategorical marker clusters [NEEDS ABSTRACTION]
+overlayers = ["Foreign Treaties", "Diplomatic Missions", "Foreign Military Actions", "Overseas Marine Landings", "Overseas Navy Personnel", "Mission Stations", "Foreign Exports", "Foreign Imports", "Major Foreign Origins", "Minor Foreign Origins"]
 
-for category in cat_dict:
+for overlayer in overlayers:
+  cluster_name = overlayer.replace(" ", "")
+  class_name = overlayer.replace(" ", "-").lower()
+  js_output.write("var {0} = new L.MarkerClusterGroup({{ clusterClass: \"{1}".format(cluster_name + "Markers", class_name)) 
+  js_output.write("\" }).on('click', pauseTimeline).on('clusterclick', pauseTimeline);\n")
+  # sublayer = "\"<img src='images/{0}.png' class='overlay-icon' height=13 width=10><span>&nbsp;{1}</span>\": {2},".format(cluster_name, overlayer, cluster_name + "Markers")
 
-  for subcategory in cat_dict[category]:
-    cluster_name = "{0}Markers".format(subcategory.replace(" ", ""))
-    class_name = "{0}".format(subcategory.replace(" ", "-").lower())
-    cluster = "' -- {0}': {1},".format(subcategory, cluster_name) 
-    js_output.write("var {0} = new L.MarkerClusterGroup({{ clusterClass: \"{1}".format(cluster_name, class_name)) 
-    js_output.write("\" }).on('click', pauseTimeline).on('clusterclick', pauseTimeline);\n")
+# overlayer = []
+
+# for category in cat_dict:
+
+  # for subcategory in cat_dict[category]:
+    # cluster_name = "{0}Markers".format(subcategory.replace(" ", ""))
+    # class_name = "{0}".format(subcategory.replace(" ", "-").lower())  
+    # js_output.write("var {0} = new L.MarkerClusterGroup({{ clusterClass: \"{1}".format(cluster_name, class_name)) 
+    # js_output.write("\" }).on('click', pauseTimeline).on('clusterclick', pauseTimeline);\n")
     
-    sublayer = "\"<img src='images/{0}.png' class='overlay-icon' height=13 width=10><span>&nbsp;{1}</span>\": {2},".format(subcategory.replace(" ", ""), subcategory, cluster_name)
-    overlayer.append(sublayer)
+    # sublayer = "\"<img src='images/{0}.png' class='overlay-icon' height=13 width=10><span>&nbsp;{1}</span>\": {2},".format(subcategory.replace(" ", ""), subcategory, cluster_name)
+    # overlayer.append(sublayer)
 
 js_output.write("\n")
 
@@ -406,12 +415,34 @@ if settings.style_refresh == True:
       style_file.write("};\n\n\n")
   style_file.close()
 
-
-# Set all category/subcategory layers to be toggleable from control panel
-js_output.write("var overlays = {")
-for overlay in overlayer:
-  js_output.write(overlay)
+# Set all category/subcategory layers to be toggleable from control panel [NEEDS ABSTRACTION]
+js_output.write("var overlays = {\n")
+js_output.write("\tDiplomacy: {\n")
+js_output.write("\t\t\"<img src='images/ForeignTreaties.png' class='overlay-icon' height=13 width=10><span>&nbsp;Foreign Treaties</span>\": ForeignTreatiesMarkers,\n")
+js_output.write("\t\t\"<img src='images/DiplomaticMissions.png' class='overlay-icon' height=13 width=10><span>&nbsp;Diplomatic Missions</span>\": DiplomaticMissionsMarkers,\n")
+js_output.write("\t},\n")
+js_output.write("\tMilitary: {\n")
+js_output.write("\t\t\"<img src='images/ForeignMilitaryActions.png' class='overlay-icon' height=13 width=10><span>&nbsp;Foreign Military Actions</span>\": ForeignMilitaryActionsMarkers,\n")
+js_output.write("\t\t\"<img src='images/OverseasMarineLandings.png' class='overlay-icon' height=13 width=10><span>&nbsp;Overseas Marine Landings</span>\": OverseasMarineLandingsMarkers,\n")
+js_output.write("\t\t\"<img src='images/OverseasNavyPersonnel.png' class='overlay-icon' height=13 width=10><span>&nbsp;Overseas Navy Personnel</span>\": OverseasNavyPersonnelMarkers,\n")
+js_output.write("\t},\n")
+js_output.write("\tMissionary: {\n")
+js_output.write("\t\t\"<img src='images/MissionStations.png' class='overlay-icon' height=13 width=10><span>&nbsp;Mission Stations</span>\": MissionStationsMarkers,\n")
+js_output.write("\t},\n")
+js_output.write("\tCommerce: {\n")
+js_output.write("\t\t\"<img src='images/ForeignExports.png' class='overlay-icon' height=13 width=10><span>&nbsp;Foreign Exports</span>\": ForeignExportsMarkers,\n")
+js_output.write("\t\t\"<img src='images/ForeignImports.png' class='overlay-icon' height=13 width=10><span>&nbsp;Foreign Imports</span>\": ForeignImportsMarkers,\n")
+js_output.write("\t},\n")
+js_output.write("\tImmigration: {\n")
+js_output.write("\t\t\"<img src='images/MajorForeignOrigins.png' class='overlay-icon' height=13 width=10><span>&nbsp;Major Foreign Origins</span>\": MajorForeignOriginsMarkers,\n")
+js_output.write("\t\t\"<img src='images/MinorForeignOrigins.png' class='overlay-icon' height=13 width=10><span>&nbsp;Minor Foreign Origins</span>\": MinorForeignOriginsMarkers,\n")
+js_output.write("\t},\n")
 js_output.write("};\n")
+
+# js_output.write("var overlays = {")
+# for overlay in overlayer:
+  # js_output.write(overlay)
+# js_output.write("};\n")
 
 js_output.write("\n")
 
@@ -429,7 +460,7 @@ js_output.write("var bounds = L.latLngBounds(southWest, northEast);\n")
 # Initialize map and append cluster layer group
 js_output.write("\n")
 js_output.write("var map = L.map('map', {{ center: {0}, zoom: {1}, maxBounds: bounds }});\n".format(settings.init_center, settings.init_zoom))
-js_output.write("L.control.layers(null, overlays).addTo(map);\n\n")
+js_output.write("L.control.groupedLayers(null, overlays).addTo(map);\n\n")
 
 # create 'setBasemap' function which switches basemaps on trigger years
 js_output.write("function setBasemap(time) {\n")
@@ -463,6 +494,78 @@ js_output.write("\tsetBasemap(time);\n")
 js_output.write("\tsetOverlays(time);\n")
 js_output.write("\tcurrentYear = time;\n")
 js_output.write("};\n")
+
+# Category toggle box injection [NEEDS ABSTRACTION]
+js_output.write("var militaryOn = false;\n")
+js_output.write("var commerceOn = false;\n")
+js_output.write("var immigrationOn = false;\n")
+js_output.write("var missionaryOn = false;\n")
+js_output.write("var diplomacyOn = false;\n")
+js_output.write("\n")
+js_output.write("function categoryBoxes() {\n")
+js_output.write("\tvar militaryBox = $( \"#leaflet-control-layers-group-name-1\" ).button({ label: \"Military\" });\n")
+js_output.write("\tmilitaryBox.click(function() {\n")
+js_output.write("\t\tif (!militaryOn) {\n")
+js_output.write("\t\t\tmap.addLayer(OverseasMarineLandingsMarkers);\n")
+js_output.write("\t\t\tmap.addLayer(OverseasNavyPersonnelMarkers);\n")
+js_output.write("\t\t\tmap.addLayer(ForeignMilitaryActionsMarkers);\n")
+js_output.write("\t\t} else {\n")
+js_output.write("\t\t\tmap.removeLayer(OverseasMarineLandingsMarkers);\n")
+js_output.write("\t\t\tmap.removeLayer(OverseasNavyPersonnelMarkers);\n")
+js_output.write("\t\t\tmap.removeLayer(ForeignMilitaryActionsMarkers);\n")
+js_output.write("\t\t}\n")
+js_output.write("\t\tmilitaryOn = !militaryOn;\n")
+js_output.write("\t});\n")
+js_output.write("\n")
+js_output.write("\tvar commerceBox = $( \"#leaflet-control-layers-group-name-3\" ).button({ label: \"Commerce\" });\n")
+js_output.write("\tcommerceBox.click(function() {\n")
+js_output.write("\t\tif (!commerceOn) {\n")
+js_output.write("\t\t\tmap.addLayer(ForeignImportsMarkers);\n")
+js_output.write("\t\t\tmap.addLayer(ForeignExportsMarkers);\n")
+js_output.write("\t\t} else {\n")
+js_output.write("\t\t\tmap.removeLayer(ForeignImportsMarkers);\n")
+js_output.write("\t\t\tmap.removeLayer(ForeignExportsMarkers);\n")
+js_output.write("\t\t}\n")
+js_output.write("\t\tcommerceOn = !commerceOn;\n")
+js_output.write("\t});\n")
+js_output.write("\n")
+js_output.write("\tvar immigrationBox = $( \"#leaflet-control-layers-group-name-4\" ).button({ label: \"Immigration\" });\n")
+js_output.write("\timmigrationBox.click(function() {\n")
+js_output.write("\t\tif (!immigrationOn) {\n")
+js_output.write("\t\t\tmap.addLayer(MinorForeignOriginsMarkers);\n")
+js_output.write("\t\t\tmap.addLayer(MajorForeignOriginsMarkers);\n")
+js_output.write("\t\t} else {\n")
+js_output.write("\t\t\tmap.removeLayer(MinorForeignOriginsMarkers);\n")
+js_output.write("\t\t\tmap.removeLayer(MajorForeignOriginsMarkers);\n")
+js_output.write("\t\t}\n")
+js_output.write("\t\timmigrationOn = !immigrationOn;\n")
+js_output.write("\t});\n")
+js_output.write("\n")
+js_output.write("\tvar missionaryBox = $( \"#leaflet-control-layers-group-name-2\" ).button({ label: \"Missionary\" });\n")
+js_output.write("\tmissionaryBox.click(function() {\n")
+js_output.write("\t\tif (!missionaryOn) {\n")
+js_output.write("\t\t\tmap.addLayer(MissionStationsMarkers);\n")
+js_output.write("\t\t} else {\n")
+js_output.write("\t\t\tmap.removeLayer(MissionStationsMarkers);\n")
+js_output.write("\t\t}\n")
+js_output.write("\t\tmissionaryOn = !missionaryOn;\n")
+js_output.write("\t});\n")
+js_output.write("\n")
+js_output.write("\tvar diplomacyBox = $( \"#leaflet-control-layers-group-name-0\" ).button({ label: \"Diplomacy\" });\n")
+js_output.write("\tdiplomacyBox.click(function() {\n")
+js_output.write("\t\tif (!diplomacyOn) {\n")
+js_output.write("\t\t\tmap.addLayer(DiplomaticMissionsMarkers);\n")
+js_output.write("\t\t\tmap.addLayer(ForeignTreatiesMarkers);\n")
+js_output.write("\t\t} else {\n")
+js_output.write("\t\t\tmap.removeLayer(DiplomaticMissionsMarkers);\n")
+js_output.write("\t\t\tmap.removeLayer(ForeignTreatiesMarkers);\n")
+js_output.write("\t\t}\n")
+js_output.write("\t\tdiplomacyOn = !diplomacyOn;\n")
+js_output.write("\t});\n")
+js_output.write("};\n")
+js_output.write("\n")
+js_output.write("categoryBoxes();\n")
+
 js_output.close()
 
 print "\033[92mDone!\033[0m"

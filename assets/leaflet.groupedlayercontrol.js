@@ -182,6 +182,8 @@ L.Control.GroupedLayers = L.Control.extend({
     if (type) {
       this._map.fire(type, obj);
     }
+    
+    categoryBoxes();
   },
 
   // IE7 bugs out if you create a radio dynamically, so you have to do it this hacky way (see http://bit.ly/PqYLBe)
@@ -235,9 +237,9 @@ L.Control.GroupedLayers = L.Control.extend({
         groupContainer.className = 'leaflet-control-layers-group';
         groupContainer.id = 'leaflet-control-layers-group-' + obj.group.id;
 
-        var groupLabel = document.createElement('span');
+        var groupLabel = document.createElement('div');
+        groupLabel.id = 'leaflet-control-layers-group-name-' + obj.group.id;
         groupLabel.className = 'leaflet-control-layers-group-name';
-        groupLabel.innerHTML = obj.group.name;
 
         groupContainer.appendChild(groupLabel);
         container.appendChild(groupContainer);
@@ -257,7 +259,7 @@ L.Control.GroupedLayers = L.Control.extend({
 
   _onInputClick: function () {
     var i, input, obj,
-        inputs = this._form.getElementsByTagName('input'),
+        inputs = this._form.getElementsByClassName('leaflet-control-layers-selector'),
         inputsLen = inputs.length;
 
     this._handlingClick = true;
