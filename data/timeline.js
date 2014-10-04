@@ -55,6 +55,7 @@ $(document).ready(function() {
   $('#animate-control').on('click', this, function () {
     if (playing === false) {
       $("#icon-target").attr("src","images/pause.png");
+      map.closePopup();
       window.animate = setInterval(function() {
         incrementYear(1);
         year = getYear();

@@ -84,3 +84,27 @@ html,body {
   max-height: 30px;
   max-width: 30px;
 }
+
+.leaflet-control-layers-group .ui-widget {
+	font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+.leaflet-control-layers-group .ui-state-default {
+  background: #EFEFEF;
+}
+
+.leaflet-control-layers-group .ui-state-hover {
+  background: #DADADA;
+}
+
+.leaflet-control-layers-group .ui-corner-all {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.ui-button-text-only .ui-button-text {
+  padding: 0.4em 0.75em;
+}
