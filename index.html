@@ -2,22 +2,60 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Globalization of the US, 1775-1861</title>
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="assets/MarkerCluster.Local.css" />
-    <link rel="stylesheet" href="assets/leaflet.groupedlayercontrol.css" />
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-    <script src="//cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-    <script src="assets/jquery.ui.touch-punch.min.js"></script>
+    <!-- BEGIN INDIANA UNIVERSITY BRANDING BAR AND FOOTER <HEAD> ELEMENTS -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      
+      <!-- These files map_*.css are modified IU brand stylesheets. The modifications are removal of footer margins to make the divs fit together properly. (Original files were located in this directory: http://www.indiana.edu/~kdglobal/omeka/themes/sepia-nostalgia/_iu-brand/css/-->
+        <link href="map_base.css" rel="stylesheet" type="text/css" />
+        <link href="map_wide.css" media="(min-width: 48.000em)" rel="stylesheet" type="text/css" />
+        
+        <!--[if (lte IE 8) & (!IEMobile)]>
+            <link href="_iu-brand/css/fixed.css" media="screen" rel="stylesheet" type="text/css" />
+        <![endif]-->
+        <!--[if IE 7]>
+            <link href="_iu-brand/css/ie7.css" rel="stylesheet" type="text/css" />
+        <![endif]--> 
+        <!--[if IE 6]>
+            <link href="_iu-brand/css/ie6.css" rel="stylesheet" type="text/css" />
+        <![endif]-->
+        <!-- END INDIANA UNIVERSITY BRANDING BAR AND FOOTER <HEAD> ELEMENTS --> 
+      
+<!-- THIS IS THE STYLESHEET FOR THE OMEKA THEME (Makes the banner header work) -->    
+      <link rel="stylesheet" href="http://www.indiana.edu/~kdglobal/omeka/themes/sepia-nostalgia/css/style.css">
+      
+<!-- THIS IS THE STYLESHEET FOR THE MAP PAGE: http://www.indiana.edu/~kdglobal/worldmap-dev/style.css -->      
+      <link rel="stylesheet" href="style.css" />
+      
+     
   </head>
   <body>
-
-    <!-- Map window -->
+ <!-- BEGIN INDIANA UNIVERSITY BRANDING BAR -->
+        <div id="branding-bar">
+        	<div class="bar">
+                <div class="wrapper">
+                    <p class="campus">
+                        <a href="http://www.iub.edu/">
+                            <img src="http://www.indiana.edu/~kdglobal/omeka/themes/sepia-nostalgia/_iu-brand/img/trident-tab.gif" height="73" width="64" alt=" " />
+                            <span class="line-break">Indiana University</span> Bloomington
+                        </a>
+                    </p>
+                    <p class="go-back"><a href="http://www.indiana.edu/~kdglobal/omeka">Back to Globalization of the United States</a></p>
+                                    </div>
+            </div>
+        </div>
+        <!-- END INDIANA UNIVERSITY BRANDING BAR -->
+        <header>
+                        <div id="site-title">
+                <a href="http://www.indiana.edu/~kdglobal/omeka" ><img src="http://www.indiana.edu/~kdglobal/omeka/files/theme_uploads/c6596d5d7a2335a392b33d4c9180912d.png" alt="Globalization of the United States, 1789-1861" /></a>
+            </div>
+            <div id="globeladies">
+            <img src="http://www.indiana.edu//~kdglobal/omeka/themes/sepia-nostalgia/images/GlobeLadies.png" alt="Coltons General Atlas of the World" />
+            </div>
+        </header>
+        
+<!-- Map window -->
     <div id="map"></div>
 
     <!-- Timeline window -->
@@ -45,12 +83,52 @@
       </div>
     </div>
     
+    <div id="bottom-map">
+      <!--This div is here to make the map image show above the footer.-->
+      </div>
+    
+       <!-- BEGIN INDIANA UNIVERSITY FOOTER -->
+        <div id="footer" role="contentinfo">
+        
+            
+        	<div class="wrapper">
+                <p class="tagline">What matters. Where it matters.</p>
+                <p class="internal">
+                 <span class="line-break"><a href="http://www.iu.edu/copyright/complaints.shtml">Copyright Complaints</a></span> | <a href="http://policies.iu.edu/policies/categories/academic-faculty-students/libraries-archives/libraries-privacy-policy.shtml">Privacy Notice</a> | <a href="http://libraries.iub.edu/">IU Libraries</a></p>
+                <p class="copyright">
+                    <a href="http://www.iu.edu/" class="block-iu"><img src="http://www.indiana.edu/~kdglobal/omeka/themes/sepia-nostalgia/_iu-brand/img/block-iu.png" height="26" width="22" alt="Block IU" /></a> 
+                    <span class="line-break">
+                        <a href="http://www.iu.edu/copyright/index.shtml">Copyright</a> &#169; 
+                        <script type="text/javascript">
+                            var theDate=new Date()
+                            document.write(theDate.getFullYear())
+                        </script>
+                    </span> 
+                    <span class="line-break">The Trustees of <a href="http://www.iu.edu/">Indiana University</a></span> 
+                </p>
+            </div>
+        </div>
+        <!-- END INDIANA UNIVERSITY FOOTER -->
+    
+   <!--script in the HTML head; relocated for Omeka integration-->
+	
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    
+    <link rel="stylesheet" href="http://www.indiana.edu/~kdglobal/worldmap-dev/assets/MarkerCluster.Local.css" />
+    <link rel="stylesheet" href="http://www.indiana.edu/~kdglobal/worldmap-dev/assets/leaflet.groupedlayercontrol.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="http://www.indiana.edu/~kdglobal/worldmap-dev/assets/jquery.ui.touch-punch.min.js"></script>
+    
     <!--<script src="assets/markercluster.min.js"></script>-->
-    <script src="assets/cluster.js"></script>
-    <script src="assets/leaflet.groupedlayercontrol.js"></script>
-    <script src="data/style.js"></script>
-    <script src="data/data.js"></script>
-    <script src="data/timeline.js"></script>
+    <script src="http://www.indiana.edu/~kdglobal/worldmap-dev/assets/cluster.js"></script>
+    <script src="http://www.indiana.edu/~kdglobal/worldmap-dev/assets/leaflet.groupedlayercontrol.js"></script>
+    <script src="http://www.indiana.edu/~kdglobal/worldmap-dev/data/style.js"></script>
+    <script src="http://www.indiana.edu/~kdglobal/worldmap-dev/data/data.js"></script>
+    <script src="http://www.indiana.edu/~kdglobal/worldmap-dev/data/timeline.js"></script>
+
 
   </body>
 </html>
