@@ -90,7 +90,7 @@ drupal.org/node/897638 */
  ****************************************/
 
 #branding-bar {
-	background: #990000 url(../img/bg-bar.gif) repeat-x 0 100%;
+	background: #7A1705 url(../img/bg-bar.gif) repeat-x 0 100%;
 	color: #fff;
 	font-family: "BentonSansCondensedRegular", "Arial Narrow", Arial, Helvetica, sans-serif;
 	font-size: 16px; /* Normalize font size */
@@ -132,6 +132,7 @@ drupal.org/node/897638 */
 /*** Trident Tab & Campus Name ***/
 
 #branding-bar .campus {
+  
 	font-family: "BentonSansCondensedRegular", "Arial Narrow", Arial, Helvetica, sans-serif;
 	font-size: 1em; /* 16px (16/16) */
 	left: auto;
@@ -164,6 +165,10 @@ drupal.org/node/897638 */
 	display: none;
 }
 
+/*Added to push "Back to Exhibit" link down */
+#branding-bar p#go-back {
+    margin-top: 12px;
+}
 /*** Search ***/
 
 #branding-bar #cse-search {
