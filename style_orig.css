@@ -1,29 +1,19 @@
-/* Global Styles */ 
-
-
-html {
-  background-color: #F8F4E9; /* Changed color from black to match Omeka theme */
-    
+/* Global Styles */
+html,body {
+  height: 90%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: black;
 }
-
-/* Added this to override padding that Omeka theme was adding to map selectors*/
-label {
-    padding-top: 0em;
-    padding-bottom: 0em;
-}
-/* Div that makes the map image above the footer work. */
-#bottom-map {
-        background-image:url(http://www.indiana.edu/~kdglobal/omeka/themes/sepia-nostalgia/images/ColtonsGeneralAtlasoftheWorld.jpg);
-    padding-bottom: 150px;
-border-top: 8px solid #AC5116}
 
 #map {
-  margin-top: 1%;
+  margin-top: 3%;
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid #F8F4E9; /* Changed color to match Omeka theme */
-  height: 65%;
-  width: 85%;
+  border: 1px solid black;
+  height: 90%;
+  width: 95%;
 }
 
 .icon-hint {
@@ -36,18 +26,16 @@ border-top: 8px solid #AC5116}
 }
 
 #timeline-group {
-  
-  margin-top: auto;
+  margin-top: 3%;
   margin-left: auto;
   margin-right: auto;
   height: 20%;
-  
 }
 
 #current-year {
   text-align: center;
   font-weight: bold;
-  color: #451401; /* Changed color to match Omeka theme */
+  color: white;
 }
 
 #slider {
